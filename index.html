@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Network</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#070b14;color:#fff;min-height:100vh}
+nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:#0a0e1a;position:fixed;width:100%;top:0;z-index:9999;border-bottom:1px solid #1e2a45}
+nav h1{color:#fff;font-size:20px;letter-spacing:2px;font-weight:800;cursor:pointer}
+nav h1 span{color:#4da6ff}
+.dots-btn{background:transparent;border:2px solid #1e2a45;font-size:24px;color:#4da6ff;cursor:pointer;padding:2px 14px;border-radius:10px;font-weight:bold}
+.menu{display:none;position:fixed;right:20px;top:68px;background:#121a2e;border:1px solid #2a3a5c;border-radius:14px;width:250px;overflow:hidden;box-shadow:0 15px 50px rgba(0,0,0,0.95);z-index:10000}
+.menu.show{display:block}
+.menu div{padding:16px 22px;cursor:pointer;border-bottom:1px solid #1e2a45;font-size:15px;color:#e0e8f5}
+.menu div:last-child{border-bottom:none}
+.menu div:hover{background:#1e2a45;color:#4da6ff}
+.page{display:none;padding:90px 20px 60px;min-height:100vh}
+.page.active{display:block}
+.hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.hero h2{font-size:50px;font-weight:800;letter-spacing:3px;background:linear-gradient(90deg,#4da6ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
+.hero p{font-size:17px;color:#b0bcd4;max-width:600px;margin-bottom:30px;line-height:1.7}
+.badges{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}
+.badge{background:rgba(18,32,58,0.7);border:1px solid #4da6ff;padding:9px 20px;border-radius:30px;font-size:13px;color:#4da6ff;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;max-width:600px;margin:50px auto 0;width:100%}
+.stat{background:rgba(18,26,46,0.7);border:1px solid #1e2a45;border-radius:16px;padding:20px;text-align:center}
+.stat h3{font-size:28px;font-weight:800;background:linear-gradient(90deg,#4da6ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat p{color:#8896b0;font-size:12px;text-transform:uppercase;margin-top:5px}
+.section-title{text-align:center;font-size:32px;margin-bottom:10px;background:linear-gradient(90deg,#4da6ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-sub{text-align:center;color:#8896b0;margin-bottom:40px;font-size:14px}
+.card{max-width:1000px;margin:0 auto 30px;display:grid;grid-template-columns:1fr 1fr;background:rgba(18,26,46,0.7);border:1px solid #1e2a45;border-radius:20px;overflow:hidden}
+.card-image{min-height:300px;background:#0a0e1a}
+.card-image img{width:100%;height:100%;object-fit:cover;display:block}
+.card-info{padding:30px 25px;display:flex;flex-direction:column}
+.card-info h3{font-size:26px;margin-bottom:8px}
+.card-version{display:inline-block;background:#12203a;border:1px solid #4da6ff;color:#4da6ff;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:15px;width:fit-content}
+.card-desc{color:#b0bcd4;font-size:14px;line-height:1.7;margin-bottom:20px}
+.card-meta{display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap}
+.card-meta div{font-size:12px;color:#8896b0}
+.card-meta strong{color:#4da6ff;display:block;font-size:14px;margin-top:3px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tag{background:#12203a;border:1px solid #2a3a5c;color:#8896b0;padding:5px 12px;border-radius:20px;font-size:11px}
+.download-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff;text-decoration:none;padding:15px 25px;border-radius:12px;font-weight:800;font-size:16px;margin-top:auto;box-shadow:0 8px 25px rgba(34,197,94,0.3)}
+.download-btn svg{width:20px;height:20px}
+.faq-item{max-width:800px;margin:0 auto 12px;background:rgba(18,26,46,0.6);border:1px solid #1e2a45;border-radius:12px;overflow:hidden}
+.faq-question{padding:18px 22px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;gap:15px}
+.faq-question .icon{color:#4da6ff;font-size:22px;transition:0.3s}
+.faq-item.open .faq-question .icon{transform:rotate(45deg);color:#a855f7}
+.faq-answer{max-height:0;overflow:hidden;transition:0.4s;padding:0 22px;color:#b0bcd4;font-size:14px;line-height:1.7}
+.faq-item.open .faq-answer{max-height:300px;padding:0 22px 20px}
+.review-stats{max-width:1000px;margin:0 auto 30px;background:rgba(18,26,46,0.7);border:1px solid #1e2a45;border-radius:20px;padding:25px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.big-rating{font-size:55px;font-weight:800;background:linear-gradient(90deg,#ffcc00,#ff8800);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.rating-info{flex:1;min-width:150px}
+.avg-stars{color:#ffcc00;font-size:20px;letter-spacing:2px}
+.rating-info p{color:#8896b0;font-size:13px;margin-top:5px}
+.bars{flex:2;min-width:220px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:12px;color:#8896b0}
+.bar-track{flex:1;height:7px;background:#0a0e1a;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,#ffcc00,#ff8800);border-radius:4px;transition:0.5s}
+.review-form{max-width:1000px;margin:0 auto 30px;background:rgba(18,26,46,0.7);border:1px solid #1e2a45;border-radius:20px;padding:25px}
+.review-form h4{color:#4da6ff;font-size:18px;margin-bottom:15px}
+.review-form input,.review-form textarea{width:100%;padding:13px 16px;background:#0a0e1a;border:1px solid #1e2a45;border-radius:10px;color:#fff;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px}
+.review-form input:focus,.review-form textarea:focus{border-color:#4da6ff}
+.review-form textarea{resize:vertical;min-height:90px}
+.star-picker{display:flex;gap:6px;margin-bottom:12px;align-items:center}
+.star-picker span[data-v]{font-size:30px;color:#2a3a5c;cursor:pointer;user-select:none;line-height:1;transition:0.15s}
+.star-picker span[data-v].active{color:#ffcc00}
+.star-picker .label{font-size:13px;color:#8896b0;margin-left:10px}
+.submit-btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(90deg,#4da6ff,#a855f7);color:#fff;font-weight:800;font-size:15px;cursor:pointer;letter-spacing:1px}
+.review-list{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.review-card{background:rgba(18,26,46,0.7);border:1px solid #1e2a45;padding:20px;border-radius:16px}
+.rc-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.rc-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#4da6ff,#a855f7);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px}
+.rc-name{font-weight:700;font-size:14px}
+.rc-date{font-size:11px;color:#556080}
+.rc-stars{color:#ffcc00;font-size:14px;margin-bottom:8px;letter-spacing:1px}
+.rc-text{color:#b0bcd4;font-size:13px;line-height:1.6}
+.empty-reviews{max-width:1000px;margin:20px auto 0;text-align:center;padding:40px 20px;color:#8896b0}
+footer{text-align:center;padding:25px;color:#556080;font-size:13px;border-top:1px solid #1e2a45;margin-top:40px}
+@media(max-width:700px){.card{grid-template-columns:1fr}.hero h2{font-size:34px}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <h1 onclick="showPage('home')">META <span>NETWORK</span></h1>
+  <button class="dots-btn" onclick="toggleMenu(event)">⋮</button>
+</nav>
+
+<div class="menu" id="menu">
+  <div onclick="showPage('home')">🏠 Home</div>
+  <div onclick="showPage('packs')">🎨 Texture Packs</div>
+  <div onclick="showPage('clients')">💻 Clients</div>
+  <div onclick="showPage('reviews')">⭐ Reviews</div>
+</div>
+<div class="page active" id="page-home">
+  <div class="hero">
+    <h2>META NETWORK</h2>
+    <p>Premium Minecraft resources for competitive players. Our texture packs and clients are <b>100% safe, optimized, and trusted</b> by thousands of players worldwide.</p>
+    <div class="badges">
+      <div class="badge">✔ 100% Safe</div>
+      <div class="badge">⚡ High Performance</div>
+      <div class="badge">🔒 Trusted by Players</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><h3>50K+</h3><p>Downloads</p></div>
+      <div class="stat"><h3>10K+</h3><p>Happy Users</p></div>
+      <div class="stat"><h3>100%</h3><p>Safe</p></div>
+      <div class="stat"><h3>24/7</h3><p>Support</p></div>
+    </div>
+  </div>
+
+  <h2 class="section-title" style="margin-top:60px">❓ FAQ</h2>
+  <p class="section-sub">Frequently Asked Questions</p>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">Is Meta Network's client safe?<span class="icon">+</span></div>
+    <div class="faq-answer">Yes! 100% safe. Every file is tested and verified before release.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">Which Minecraft versions are supported?<span class="icon">+</span></div>
+    <div class="faq-answer">Pigman Black: 1.21.11. HitsOnly Vanilla Edit: 1.21.x. Francium Reborn: 1.21.4. 22QQ Client: 1.21.11.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">How do I install the texture pack?<span class="icon">+</span></div>
+    <div class="faq-answer">Download the .zip, go to Minecraft → Options → Resource Packs → Open Pack Folder, drag it there.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">Are the downloads free?<span class="icon">+</span></div>
+    <div class="faq-answer">Yes! Everything is completely free. No hidden charges.</div>
+  </div>
+</div>
+
+<div class="page" id="page-packs">
+  <h2 class="section-title">🎨 Texture Packs</h2>
+  <p class="section-sub">Handcrafted packs for the ultimate PvP experience</p>
+
+  <div class="card">
+    <div class="card-image"><img src="https://raw.githubusercontent.com/brotheransari496-boop/Meta-Network-/9e59a5e2611e16a5192aca19a0c4238dbb85ed18/screenshot_1%20(1).webp" alt="Pigman Black"></div>
+    <div class="card-info">
+      <h3>Pigman Black</h3>
+      <div class="card-version">Version 1.21.11</div>
+      <p class="card-desc">A dark-themed PvP texture pack with a sleek black aesthetic.</p>
+      <div class="card-meta"><div>Resolution<strong>16x</strong></div><div>File Size<strong>45.3 MB</strong></div><div>Category<strong>PvP</strong></div></div>
+      <div class="tags"><span class="tag">#PvP</span><span class="tag">#Clean</span><span class="tag">#Black</span></div>
+      <a href="https://www.mediafire.com/file/zy1kg7orrkyoi6e/PigBlack.zip/file" target="_blank" class="download-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>DOWNLOAD NOW</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-image"><img src="https://raw.githubusercontent.com/faizanhaider801/HackClient/c2277e16109dc9c6277e2368d0cc1265cd8f54d4/2025-09-13_13.webp" alt="HitsOnly Vanilla Edit"></div>
+    <div class="card-info">
+      <h3>HitsOnly Vanilla Edit</h3>
+      <div class="card-version">Version 1.21.x</div>
+      <p class="card-desc">Perfect for Crystal PvP. Includes Low Fire, Small Pop, No Particles.</p>
+      <div class="card-meta"><div>Resolution<strong>16x</strong></div><div>File Size<strong>170 KB</strong></div><div>Category<strong>Crystal PvP</strong></div></div>
+      <div class="tags"><span class="tag">#CrystalPvP</span><span class="tag">#LowFire</span><span class="tag">#NoParticles</span></div>
+      <a href="https://www.mediafire.com/file/d7s5dlz9d7sy1f9/HitsOnly_Private.zip/file" target="_blank" class="download-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>DOWNLOAD NOW</a>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-clients">
+  <h2 class="section-title">💻 Clients</h2>
+  <p class="section-sub">Powerful PvP clients for competitive gameplay</p>
+
+  <div class="card">
+    <div class="card-image"><img src="https://raw.githubusercontent.com/brotheransari496-boop/Meta-Network-/6d1ba2ddf1ef34f61376fc7c8c580ffd2eb8561f/image-1.png" alt="Francium Reborn"></div>
+    <div class="card-info">
+      <h3>Francium Reborn</h3>
+      <div class="card-version">Version 1.21.4</div>
+      <p class="card-desc">Powerful safe PvP client with Auto Crystal, Auto Pot, Reach, Hitboxes, ESP, Nametags.</p>
+      <div class="card-meta"><div>Requires<strong>FabricAPI</strong></div><div>Keybind<strong>Delete</strong></div><div>Type<strong>Safe</strong></div></div>
+      <div class="tags"><span class="tag">#PvP</span><span class="tag">#Crystal</span><span class="tag">#Fabric</span></div>
+      <a href="https://www.mediafire.com/file/s64am2zu2j6of47/fabric-dimensions-api-v1-0.80.0%25285%2529.jar/file" target="_blank" class="download-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>DOWNLOAD NOW</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-image"><img src="https://raw.githubusercontent.com/faizanhaider801/HackClient/104538a0f02e61b67b56d031b04a612a7818e3bd/image-2.png" alt="22QQ Client"></div>
+    <div class="card-info">
+      <h3>22QQ Client</h3>
+      <div class="card-version">Version 1.21.11</div>
+      <p class="card-desc">Made for SS bypass. Features Iwf.h Crystal, Auto Inventory Totem, Anchor Macro, Safe Anchor, Totem KB, Auto Double Hand, Totem Offhand, AirPlace, Auto Hit Crystal.</p>
+      <div class="card-meta"><div>Keybind<strong>Backspace</strong></div><div>Modules<strong>24</strong></div><div>Type<strong>SS Bypass</strong></div></div>
+      <div class="tags"><span class="tag">#Crystal</span><span class="tag">#SSBypass</span><span class="tag">#PvP</span></div>
+      <a href="https://www.mediafire.com/file/bck30q813xk4ohe/22qq-cracked-1.jar/file" target="_blank" class="download-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>DOWNLOAD NOW</a>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-reviews">
+  <h2 class="section-title">⭐ Reviews</h2>
+  <p class="section-sub">Be the first to share your experience!</p>
+
+  <div class="review-stats">
+    <div class="big-rating" id="avgRating">0.0</div>
+    <div class="rating-info">
+      <div class="avg-stars" id="avgStars">☆☆☆☆☆</div>
+      <p id="totalReviews">Based on 0 reviews</p>
+    </div>
+    <div class="bars">
+      <div class="bar-row"><span>5★</span><div class="bar-track"><div class="bar-fill" id="bar5"></div></div></div>
+      <div class="bar-row"><span>4★</span><div class="bar-track"><div class="bar-fill" id="bar4"></div></div></div>
+      <div class="bar-row"><span>3★</span><div class="bar-track"><div class="bar-fill" id="bar3"></div></div></div>
+      <div class="bar-row"><span>2★</span><div class="bar-track"><div class="bar-fill" id="bar2"></div></div></div>
+      <div class="bar-row"><span>1★</span><div class="bar-track"><div class="bar-fill" id="bar1"></div></div></div>
+    </div>
+  </div>
+
+  <div class="review-form">
+    <h4>✍️ Write Your Review</h4>
+    <input type="text" id="reviewName" placeholder="Your name" maxlength="30">
+    <div class="star-picker" id="starPicker">
+      <span data-v="1">★</span>
+      <span data-v="2">★</span>
+      <span data-v="3">★</span>
+      <span data-v="4">★</span>
+      <span data-v="5">★</span>
+      <span class="label" id="starLabel">Select rating</span>
+    </div>
+    <textarea id="reviewText" placeholder="Share your experience..." maxlength="300"></textarea>
+    <button class="submit-btn" onclick="addReview()">SUBMIT REVIEW</button>
+  </div>
+
+  <div class="review-list" id="reviewList"></div>
+  <div class="empty-reviews" id="emptyReviews">No reviews yet. Be the first to share your experience! 🚀</div>
+</div>
+
+<footer>© 2025 Meta Network. All rights reserved. 👑</footer>
+<script>
+function showPage(id){var p=document.querySelectorAll('.page');for(var i=0;i<p.length;i++)p[i].classList.remove('active');var t=document.getElementById('page-'+id);if(t)t.classList.add('active');var m=document.getElementById('menu');if(m)m.classList.remove('show');window.scrollTo(0,0)}
+function toggleMenu(e){if(e)e.stopPropagation();var m=document.getElementById('menu');if(m)m.classList.toggle('show')}
+document.addEventListener('click',function(e){var m=document.getElementById('menu');var b=document.querySelector('.dots-btn');if(m&&m.classList.contains('show')&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('show')}});
+function toggleFaq(el){el.parentElement.classList.toggle('open')}
+var selectedStars=0;var reviews=[];
+try{var s=localStorage.getItem('metaReviewsFinal');if(s)reviews=JSON.parse(s)}catch(e){reviews=[]}
+function saveReviews(){try{localStorage.setItem('metaReviewsFinal',JSON.stringify(reviews))}catch(e){}}
+function initStarPicker(){var p=document.getElementById('starPicker');if(!p)return;var s=p.querySelectorAll('span[data-v]');var l=document.getElementById('starLabel');var lb={1:"Poor",2:"Average",3:"Good",4:"Very Good",5:"Excellent"};for(var i=0;i<s.length;i++){(function(st){st.onclick=function(){selectedStars=parseInt(st.getAttribute('data-v'));updateStars();if(l)l.textContent=lb[selectedStars]}})(s[i])}}
+function updateStars(){var p=document.getElementById('starPicker');if(!p)return;var s=p.querySelectorAll('span[data-v]');for(var i=0;i<s.length;i++){if(parseInt(s[i].getAttribute('data-v'))<=selectedStars)s[i].classList.add('active');else s[i].classList.remove('active')}}
+function renderReviews(){var l=document.getElementById('reviewList');var em=document.getElementById('emptyReviews');if(!l)return;l.innerHTML='';if(reviews.length===0){if(em)em.style.display='block';updateStats();return}if(em)em.style.display='none';for(var i=0;i<reviews.length;i++){var r=reviews[i];var st='';for(var j=0;j<r.stars;j++)st+='★';for(var j=r.stars;j<5;j++)st+='☆';var ini=r.name.charAt(0).toUpperCase();var c=document.createElement('div');c.className='review-card';c.innerHTML='<div class="rc-head"><div class="rc-avatar">'+ini+'</div><div><div class="rc-name">'+esc(r.name)+'</div><div class="rc-date">'+esc(r.date||'Just now')+'</div></div></div><div class="rc-stars">'+st+'</div><div class="rc-text">'+esc(r.text)+'</div>';l.appendChild(c)}updateStats()}
+function updateStats(){var t=reviews.length;var a=document.getElementById('avgRating');var tot=document.getElementById('totalReviews');var st=document.getElementById('avgStars');if(!a)return;if(t===0){a.textContent='0.0';if(tot)tot.textContent='Based on 0 reviews';if(st)st.textContent='☆☆☆☆☆';for(var k=1;k<=5;k++){var b=document.getElementById('bar'+k);if(b)b.style.width='0%'}return}var sum=0;var c={1:0,2:0,3:0,4:0,5:0};for(var i=0;i<reviews.length;i++){sum+=reviews[i].stars;c[reviews[i].stars]++}var avg=(sum/t).toFixed(1);a.textContent=avg;if(tot)tot.textContent='Based on '+t+' review'+(t>1?'s':'');var f=Math.round(avg);var ss='';for(var i=0;i<f;i++)ss+='★';for(var i=f;i<5;i++)ss+='☆';if(st)st.textContent=ss;for(var k=1;k<=5;k++){var b=document.getElementById('bar'+k);if(b)b.style.width=((c[k]/t)*100)+'%'}}
+function addReview(){var n=document.getElementById('reviewName');var x=document.getElementById('reviewText');if(!n||!x)return;var name=n.value.trim();var text=x.value.trim();if(!name||!text){alert('Please enter both your name and review!');return}if(selectedStars===0){alert('Please select a star rating!');return}reviews.unshift({name:name,stars:selectedStars,text:text,date:'Just now'});saveReviews();renderReviews();n.value='';x.value='';selectedStars=0;updateStars();var l=document.getElementById('starLabel');if(l)l.textContent='Select rating';alert('Thank you! Your review has been added.')}
+function esc(str){var d=document.createElement('div');d.textContent=str;return d.innerHTML}
+initStarPicker();renderReviews();
+</script>
+
+</body>
+</html>

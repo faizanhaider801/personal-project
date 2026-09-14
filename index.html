@@ -9,8 +9,11 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 body{background:#050810;color:#fff;min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(circle at 15% 15%,rgba(77,166,255,0.15) 0%,transparent 45%),radial-gradient(circle at 85% 75%,rgba(168,85,247,0.15) 0%,transparent 45%),#050810}
-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;background:rgba(5,8,16,0.85);backdrop-filter:blur(20px);position:fixed;width:100%;top:0;z-index:9999;border-bottom:1px solid rgba(77,166,255,0.15)}
-nav h1{font-size:20px;letter-spacing:3px;font-weight:900;cursor:pointer;background:linear-gradient(135deg,#4da6ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+nav{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;background:rgba(5,8,16,0.85);backdrop-filter:blur(20px);position:fixed;width:100%;top:0;z-index:9999;border-bottom:1px solid rgba(77,166,255,0.15)}
+.nav-left{display:flex;align-items:center;gap:12px;cursor:pointer}
+.nav-left svg{width:38px;height:38px;filter:drop-shadow(0 0 10px #4da6ff)}
+nav h1{font-size:20px;letter-spacing:3px;font-weight:900;background:linear-gradient(135deg,#4da6ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-right{display:flex;align-items:center;gap:8px}
 .dots-btn{background:rgba(18,26,46,0.8);border:1.5px solid rgba(77,166,255,0.3);font-size:22px;color:#4da6ff;cursor:pointer;padding:6px 16px;border-radius:12px;font-weight:bold;transition:0.3s}
 .dots-btn:hover{background:rgba(77,166,255,0.15);transform:scale(1.05)}
 .menu{display:none;position:fixed;right:20px;top:74px;background:rgba(18,26,46,0.98);backdrop-filter:blur(20px);border:1px solid rgba(77,166,255,0.3);border-radius:16px;width:260px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.9);z-index:10000}
@@ -122,14 +125,64 @@ nav h1{font-size:20px;letter-spacing:3px;font-weight:900;cursor:pointer;backgrou
 .rc-text{color:#9ca8c0;font-size:14px;line-height:1.6}
 .empty-reviews{max-width:1050px;margin:20px auto 0;text-align:center;padding:50px 20px;color:#8896b0;font-size:15px}
 footer{text-align:center;padding:35px;color:#556080;font-size:13px;border-top:1px solid #1e2a45;margin-top:60px}
-@media(max-width:700px){.hero h2{font-size:36px;letter-spacing:3px}.hero-stats{grid-template-columns:repeat(2,1fr)}.card{grid-template-columns:1fr}.card-image{min-height:220px}.section-title{font-size:28px}.card-info{padding:25px 22px}.card-info h3{font-size:23px}.menu{right:12px;width:240px}nav{padding:14px 18px}nav h1{font-size:17px}.impact-box{padding:30px 22px}.card-image .logo-svg{width:120px;height:120px}}
+/* AUTH */
+.auth-btn{background:linear-gradient(135deg,#4da6ff,#a855f7);border:none;color:#fff;cursor:pointer;padding:9px 20px;border-radius:12px;font-weight:800;font-size:13px;transition:0.3s}
+.auth-btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(77,166,255,0.4)}
+.user-badge{display:none;align-items:center;gap:10px;background:rgba(18,26,46,0.8);border:1.5px solid rgba(77,166,255,0.3);padding:4px 14px 4px 4px;border-radius:30px;cursor:pointer;transition:0.3s}
+.user-badge:hover{border-color:#4da6ff}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#4da6ff,#a855f7);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff}
+.user-name{font-size:13px;font-weight:700;color:#fff;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);z-index:99999;justify-content:center;align-items:center;padding:20px}
+.modal-overlay.show{display:flex;animation:fadeIn 0.3s}
+.auth-modal{background:linear-gradient(135deg,#121a2e,#0a0e1a);border:1px solid rgba(77,166,255,0.3);border-radius:24px;padding:38px 32px;max-width:420px;width:100%;position:relative;box-shadow:0 30px 90px rgba(0,0,0,0.9),0 0 60px rgba(77,166,255,0.15);animation:modalPop 0.35s}
+@keyframes modalPop{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:16px;right:16px;background:rgba(30,42,69,0.6);border:none;color:#8896b0;font-size:22px;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.3s;font-family:inherit}
+.modal-close:hover{background:#ff0040;color:#fff;transform:rotate(90deg)}
+.auth-modal h2{font-size:26px;font-weight:900;background:linear-gradient(135deg,#4da6ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;text-align:center}
+.auth-modal .auth-sub{text-align:center;color:#8896b0;font-size:13px;margin-bottom:28px}
+.auth-field{margin-bottom:16px}
+.auth-field label{display:block;color:#8896b0;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.auth-field input{width:100%;padding:14px 18px;background:#0a0e1a;border:1.5px solid #1e2a45;border-radius:12px;color:#fff;font-size:15px;font-family:inherit;outline:none;transition:0.3s}
+.auth-field input:focus{border-color:#4da6ff;box-shadow:0 0 0 3px rgba(77,166,255,0.15)}
+.auth-submit{width:100%;padding:15px;border:none;border-radius:12px;background:linear-gradient(135deg,#4da6ff,#a855f7);color:#fff;font-weight:800;font-size:15px;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;margin-top:10px;transition:0.3s}
+.auth-submit:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(77,166,255,0.4)}
+.auth-switch{text-align:center;color:#8896b0;font-size:13px;margin-top:20px}
+.auth-switch a{color:#4da6ff;text-decoration:none;font-weight:700;cursor:pointer}
+.auth-switch a:hover{text-decoration:underline}
+.auth-error{background:rgba(255,0,64,0.1);border:1px solid rgba(255,0,64,0.4);color:#ff6b9d;padding:12px 16px;border-radius:10px;font-size:13px;margin-bottom:16px;display:none}
+.auth-error.show{display:block}
+.logout-item{color:#ff6b9d!important}
+@media(max-width:700px){.hero h2{font-size:36px;letter-spacing:3px}.hero-stats{grid-template-columns:repeat(2,1fr)}.card{grid-template-columns:1fr}.card-image{min-height:220px}.section-title{font-size:28px}.card-info{padding:25px 22px}.card-info h3{font-size:23px}.menu{right:12px;width:240px}nav{padding:12px 16px}nav h1{font-size:16px}.impact-box{padding:30px 22px}.card-image .logo-svg{width:120px;height:120px}.nav-left svg{width:32px;height:32px}}
 </style>
 </head>
 <body>
 
 <nav>
-  <h1 onclick="showPage('home')">META NETWORK</h1>
-  <button class="dots-btn" onclick="toggleMenu(event)">⋮</button>
+  <div class="nav-left" onclick="showPage('home')">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="klogo" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#4da6ff"/>
+          <stop offset="100%" stop-color="#a855f7"/>
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="url(#klogo)" stroke-width="4"/>
+      <path d="M25 65 L25 40 L37 50 L50 32 L63 50 L75 40 L75 65 Z" fill="url(#klogo)" stroke="url(#klogo)" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="25" cy="38" r="4" fill="#4da6ff"/>
+      <circle cx="50" cy="30" r="4" fill="#a855f7"/>
+      <circle cx="75" cy="38" r="4" fill="#4da6ff"/>
+      <rect x="25" y="68" width="50" height="6" rx="3" fill="url(#klogo)"/>
+    </svg>
+    <h1>META NETWORK</h1>
+  </div>
+  <div class="nav-right">
+    <button class="auth-btn" id="loginNavBtn" onclick="openAuth('login')">👤 Login</button>
+    <div class="user-badge" id="userBadge" onclick="toggleUserMenu(event)">
+      <div class="user-avatar" id="userAvatar">?</div>
+      <span class="user-name" id="userName">User</span>
+    </div>
+    <button class="dots-btn" onclick="toggleMenu(event)">⋮</button>
+  </div>
 </nav>
 
 <div class="menu" id="menu">
@@ -139,6 +192,30 @@ footer{text-align:center;padding:35px;color:#556080;font-size:13px;border-top:1p
   <div onclick="showPage('reviews')">⭐ Reviews</div>
 </div>
 
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="auth-modal">
+    <button class="modal-close" onclick="closeAuth()">×</button>
+    <h2 id="authTitle">Welcome Back</h2>
+    <p class="auth-sub" id="authSub">Login to your Meta Network account</p>
+    <div class="auth-error" id="authError"></div>
+    <div id="loginForm">
+      <div class="auth-field"><label>Username</label><input type="text" id="loginUser" placeholder="Enter your username" maxlength="20"></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="loginPass" placeholder="Enter your password" maxlength="40"></div>
+      <button class="auth-submit" onclick="doLogin()">Login</button>
+      <p class="auth-switch">Don't have an account? <a onclick="switchAuth('register')">Register</a></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="auth-field"><label>Username</label><input type="text" id="regUser" placeholder="Choose a username" maxlength="20"></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="regPass" placeholder="Create a password" maxlength="40"></div>
+      <div class="auth-field"><label>Confirm Password</label><input type="password" id="regPass2" placeholder="Confirm your password" maxlength="40"></div>
+      <button class="auth-submit" onclick="doRegister()">Create Account</button>
+      <p class="auth-switch">Already have an account? <a onclick="switchAuth('login')">Login</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- HOME PAGE -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-badge"><span class="dot"></span> Trusted by 10,000+ Players</div>
@@ -161,11 +238,11 @@ footer{text-align:center;padding:35px;color:#556080;font-size:13px;border-top:1p
     <p class="section-sub">We make your Minecraft experience better in every way</p>
     <div class="help-grid">
       <div class="help-card"><div class="help-icon">⚡</div><h4>Boost Your FPS</h4><p>Our texture packs are optimized to give you smooth gameplay even on low-end devices.</p><span class="benefit">UP TO 2X FPS</span></div>
-      <div class="help-card"><div class="help-icon">🎯</div><h4>Better PvP Visibility</h4><p>Low fire, small pop, no particles — see your enemies clearly and land every crystal, every hit.</p><span class="benefit">FASTER REACTIONS</span></div>
-      <div class="help-card"><div class="help-icon">🛡️</div><h4>Safe & Trusted</h4><p>Every file is scanned and tested before release. No malware, no viruses — just pure performance.</p><span class="benefit">100% SECURE</span></div>
-      <div class="help-card"><div class="help-icon">🎨</div><h4>Clean Aesthetic</h4><p>Beautiful, modern textures that look amazing and feel professional. Perfect for recording.</p><span class="benefit">STREAM-READY</span></div>
-      <div class="help-card"><div class="help-icon">💎</div><h4>Pro-Level Clients</h4><p>Access top-tier clients with Auto Crystal, ESP, Reach, and more — features used by pros.</p><span class="benefit">COMPETITIVE EDGE</span></div>
-      <div class="help-card"><div class="help-icon">🔄</div><h4>Always Updated</h4><p>We constantly add new packs and clients for the latest Minecraft versions. Never fall behind.</p><span class="benefit">LATEST VERSIONS</span></div>
+      <div class="help-card"><div class="help-icon">🎯</div><h4>Better PvP Visibility</h4><p>Low fire, small pop, no particles — see your enemies clearly and land every hit.</p><span class="benefit">FASTER REACTIONS</span></div>
+      <div class="help-card"><div class="help-icon">🛡️</div><h4>Safe & Trusted</h4><p>Every file is scanned and tested before release. No malware, no viruses.</p><span class="benefit">100% SECURE</span></div>
+      <div class="help-card"><div class="help-icon">🎨</div><h4>Clean Aesthetic</h4><p>Beautiful, modern textures that look amazing and feel professional.</p><span class="benefit">STREAM-READY</span></div>
+      <div class="help-card"><div class="help-icon">💎</div><h4>Pro-Level Clients</h4><p>Access top-tier clients with Auto Crystal, ESP, Reach, and more.</p><span class="benefit">COMPETITIVE EDGE</span></div>
+      <div class="help-card"><div class="help-icon">🔄</div><h4>Always Updated</h4><p>We constantly add new packs and clients for the latest Minecraft versions.</p><span class="benefit">LATEST VERSIONS</span></div>
     </div>
   </div>
 
@@ -332,10 +409,92 @@ footer{text-align:center;padding:35px;color:#556080;font-size:13px;border-top:1p
 <footer>© 2025 Meta Network. All rights reserved. 👑</footer>
 
 <script>
+// ===== PAGE NAVIGATION =====
 function showPage(id){var p=document.querySelectorAll('.page');for(var i=0;i<p.length;i++)p[i].classList.remove('active');var t=document.getElementById('page-'+id);if(t)t.classList.add('active');var m=document.getElementById('menu');if(m)m.classList.remove('show');window.scrollTo(0,0)}
 function toggleMenu(e){if(e)e.stopPropagation();var m=document.getElementById('menu');if(m)m.classList.toggle('show')}
 document.addEventListener('click',function(e){var m=document.getElementById('menu');var b=document.querySelector('.dots-btn');if(m&&m.classList.contains('show')&&!m.contains(e.target)&&!b.contains(e.target)){m.classList.remove('show')}});
 function toggleFaq(el){el.parentElement.classList.toggle('open')}
+
+// ===== AUTH SYSTEM =====
+var currentUser=null;
+function getUsers(){try{var u=localStorage.getItem('metaUsers');return u?JSON.parse(u):{}}catch(e){return{}}}
+function saveUsers(u){try{localStorage.setItem('metaUsers',JSON.stringify(u))}catch(e){}}
+function getSession(){try{var s=localStorage.getItem('metaSession');return s?JSON.parse(s):null}catch(e){return null}}
+function saveSession(s){try{if(s)localStorage.setItem('metaSession',JSON.stringify(s));else localStorage.removeItem('metaSession')}catch(e){}}
+function openAuth(mode){document.getElementById('authModal').classList.add('show');switchAuth(mode);document.getElementById('authError').classList.remove('show')}
+function closeAuth(){document.getElementById('authModal').classList.remove('show')}
+function switchAuth(mode){
+  var lf=document.getElementById('loginForm'),rf=document.getElementById('registerForm');
+  if(mode==='register'){lf.style.display='none';rf.style.display='block';document.getElementById('authTitle').textContent='Create Account';document.getElementById('authSub').textContent='Join Meta Network today'}
+  else{lf.style.display='block';rf.style.display='none';document.getElementById('authTitle').textContent='Welcome Back';document.getElementById('authSub').textContent='Login to your Meta Network account'}
+  document.getElementById('authError').classList.remove('show')
+}
+function showAuthError(msg){var e=document.getElementById('authError');e.textContent='⚠️ '+msg;e.classList.add('show')}
+function doRegister(){
+  var user=document.getElementById('regUser').value.trim();
+  var pass=document.getElementById('regPass').value;
+  var pass2=document.getElementById('regPass2').value;
+  if(!user||!pass||!pass2){showAuthError('Please fill all fields');return}
+  if(user.length<3){showAuthError('Username must be at least 3 characters');return}
+  if(pass.length<4){showAuthError('Password must be at least 4 characters');return}
+  if(pass!==pass2){showAuthError('Passwords do not match');return}
+  var users=getUsers();
+  var key=user.toLowerCase();
+  if(users[key]){showAuthError('Username already taken');return}
+  users[key]={name:user,pass:pass,created:new Date().toISOString()};
+  saveUsers(users);
+  saveSession({name:user});
+  currentUser={name:user};
+  updateAuthUI();
+  closeAuth();
+  document.getElementById('regUser').value='';document.getElementById('regPass').value='';document.getElementById('regPass2').value='';
+  alert('🎉 Welcome, '+user+'! Account created successfully.');
+}
+function doLogin(){
+  var user=document.getElementById('loginUser').value.trim();
+  var pass=document.getElementById('loginPass').value;
+  if(!user||!pass){showAuthError('Please fill all fields');return}
+  var users=getUsers();
+  var key=user.toLowerCase();
+  if(!users[key]){showAuthError('Username not found. Please register.');return}
+  if(users[key].pass!==pass){showAuthError('Incorrect password');return}
+  currentUser={name:users[key].name};
+  saveSession(currentUser);
+  updateAuthUI();
+  closeAuth();
+  document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';
+  alert('👋 Welcome back, '+users[key].name+'!');
+}
+function doLogout(){
+  currentUser=null;saveSession(null);updateAuthUI();
+  alert('👋 Logged out successfully');
+}
+function updateAuthUI(){
+  var loginBtn=document.getElementById('loginNavBtn');
+  var badge=document.getElementById('userBadge');
+  if(currentUser){
+    loginBtn.style.display='none';
+    badge.style.display='flex';
+    document.getElementById('userAvatar').textContent=currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('userName').textContent=currentUser.name;
+    var nameInput=document.getElementById('reviewName');
+    if(nameInput){nameInput.value=currentUser.name;nameInput.readOnly=true;nameInput.style.opacity='0.7'}
+  } else {
+    loginBtn.style.display='inline-block';
+    badge.style.display='none';
+    var nameInput=document.getElementById('reviewName');
+    if(nameInput){nameInput.value='';nameInput.readOnly=false;nameInput.style.opacity='1'}
+  }
+}
+function toggleUserMenu(e){
+  if(e)e.stopPropagation();
+  if(!currentUser)return;
+  var menu=document.getElementById('menu');
+  menu.innerHTML='<div onclick="showPage(\'home\')">🏠 Home</div><div onclick="showPage(\'packs\')">🎨 Texture Packs</div><div onclick="showPage(\'clients\')">💻 Clients</div><div onclick="showPage(\'reviews\')">⭐ Reviews</div><div class="logout-item" onclick="doLogout();document.getElementById(\'menu\').classList.remove(\'show\')">🚪 Logout</div>';
+  menu.classList.toggle('show');
+}
+
+// ===== REVIEWS =====
 var selectedStars=0;var reviews=[];
 try{var s=localStorage.getItem('metaReviewsFinal');if(s)reviews=JSON.parse(s)}catch(e){reviews=[]}
 function saveReviews(){try{localStorage.setItem('metaReviewsFinal',JSON.stringify(reviews))}catch(e){}}
@@ -345,7 +504,11 @@ function renderReviews(){var l=document.getElementById('reviewList');var em=docu
 function updateStats(){var t=reviews.length;var a=document.getElementById('avgRating');var tot=document.getElementById('totalReviews');var st=document.getElementById('avgStars');if(!a)return;if(t===0){a.textContent='0.0';if(tot)tot.textContent='Based on 0 reviews';if(st)st.textContent='☆☆☆☆☆';for(var k=1;k<=5;k++){var b=document.getElementById('bar'+k);if(b)b.style.width='0%'}return}var sum=0;var c={1:0,2:0,3:0,4:0,5:0};for(var i=0;i<reviews.length;i++){sum+=reviews[i].stars;c[reviews[i].stars]++}var avg=(sum/t).toFixed(1);a.textContent=avg;if(tot)tot.textContent='Based on '+t+' review'+(t>1?'s':'');var f=Math.round(avg);var ss='';for(var i=0;i<f;i++)ss+='★';for(var i=f;i<5;i++)ss+='☆';if(st)st.textContent=ss;for(var k=1;k<=5;k++){var b=document.getElementById('bar'+k);if(b)b.style.width=((c[k]/t)*100)+'%'}}
 function addReview(){var n=document.getElementById('reviewName');var x=document.getElementById('reviewText');if(!n||!x)return;var name=n.value.trim();var text=x.value.trim();if(!name||!text){alert('Please enter both your name and review!');return}if(selectedStars===0){alert('Please select a star rating!');return}reviews.unshift({name:name,stars:selectedStars,text:text,date:'Just now'});saveReviews();renderReviews();n.value='';x.value='';selectedStars=0;updateStars();var l=document.getElementById('starLabel');if(l)l.textContent='Select rating';alert('Thank you! Your review has been added.')}
 function esc(str){var d=document.createElement('div');d.textContent=str;return d.innerHTML}
-initStarPicker();renderReviews();
+
+// ===== INIT =====
+initStarPicker();
+renderReviews();
+(function(){var s=getSession();if(s){currentUser=s}updateAuthUI()})();
 </script>
 
 </body>
